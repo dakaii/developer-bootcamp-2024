@@ -46,7 +46,7 @@ mod journal {
 }
 
 #[account]
-pub struct JournalEntryState {
+pub struct JournalEntry{
     pub owner: Pubkey,
     pub title: String,
     pub message: String,
@@ -62,7 +62,7 @@ pub struct CreateEntry<'info> {
         payer = owner, 
         space = 8 + 32 + 4 + title.len() + 4 + message.len()
     )]
-    pub journal_entry: Account<'info, JournalEntryState>,
+    pub journal_entry: Account<'info, JournalEntry>,
     #[account(mut)]
     pub owner: Signer<'info>,
     pub system_program: Program<'info, System>,
@@ -79,7 +79,7 @@ pub struct UpdateEntry<'info> {
         realloc::payer = owner, 
         realloc::zero = true, 
     )]
-    pub journal_entry: Account<'info, JournalEntryState>,
+    pub journal_entry: Account<'info, JournalEntry>,
     #[account(mut)]
     pub owner: Signer<'info>,
     pub system_program: Program<'info, System>,
@@ -94,7 +94,7 @@ pub struct DeleteEntry<'info> {
         bump, 
         close= owner,
     )]
-    pub journal_entry: Account<'info, JournalEntryState>,
+    pub journal_entry: Account<'info, JournalEntry>,
     #[account(mut)]
     pub owner: Signer<'info>,
     pub system_program: Program<'info, System>,
